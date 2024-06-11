@@ -53,6 +53,8 @@ export default class ProductRepository {
 
     findProductById = async (id: number) => {
         return await Product.createQueryBuilder('product')
+            .innerJoinAndSelect('product.category', 'category')
+            .innerJoinAndSelect('product.supplier', 'supplier')
             .where('product.id = :id', {id})
             .getOne()
     }
