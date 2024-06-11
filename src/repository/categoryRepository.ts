@@ -9,7 +9,7 @@ export default class CategoryRepository {
     filterCategory = async (req: FastifyRequest<{ Body: FilterCategoryRequestBody, Querystring: PaginateQuery }>) => {
         const filtro = req.body;
         const paginacao = req.query;
-        const description = filtro.description;
+        const description = filtro?.description;
 
         const queryUtils = new QueryUtils();
         const builder = queryUtils.addSelect(`

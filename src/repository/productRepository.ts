@@ -11,9 +11,9 @@ export default class ProductRepository {
     filterProduct = async (req: FastifyRequest<{ Body: FilterProductRequestBody, Querystring: PaginateQuery }>) => {
         const filtro = req.body;
         const paginacao = req.query;
-        const description = filtro.description;
-        const categoryId = filtro.categoryId;
-        const supplierId = filtro.supplierId;
+        const description = filtro?.description;
+        const categoryId = filtro?.categoryId;
+        const supplierId = filtro?.supplierId;
 
         const queryUtils = new QueryUtils();
         const builder = queryUtils.addSelect(`

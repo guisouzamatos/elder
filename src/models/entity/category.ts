@@ -12,6 +12,6 @@ export class Category extends AbstractEntity {
     @Column({name: 'description'})
     description: string;
 
-    @OneToMany(() => Product, product => product.category, {cascade: ["remove", "soft-remove"]})
+    @OneToMany(() => Product, product => product.category)
     products: Product[];
 }

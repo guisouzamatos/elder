@@ -25,7 +25,9 @@ export default class CategoryService {
         }
         const products = category.products;
         const productsIds = products.map(product => product.id);
-        await this.getProductService().deleteAllProductsById(productsIds);
+        if (productsIds.length > 0) {
+            throw {status: 400, message: 'Categoria não pode ser excluída pois está associada à um produto.'};
+        }
         await this.repository.deleteCategoryById(id);
         return category;
     };
