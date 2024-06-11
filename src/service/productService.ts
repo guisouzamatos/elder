@@ -84,6 +84,9 @@ export default class ProductService {
 
     filterProduct = async (req: FastifyRequest<{ Body: FilterProductRequestBody, Querystring: PaginateQuery }>, reply: FastifyReply) => {
         const productPage = await this.repository.filterProduct(req);
+        productPage.content.forEach(product => {
+            product.price = `R$ ${parseFloat(product.price).toFixed(2)}`;
+        })
         return productPage;
     };
 }

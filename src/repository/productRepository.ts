@@ -20,7 +20,8 @@ export default class ProductRepository {
             "product"."id_product" as "id",
             "product"."description" as "description",
             "category"."description" as "categoryDescription",
-            "supplier"."name" as "supplierName"
+            "supplier"."name" as "supplierName",
+            "product"."price" as "price"
             `)
             .addFrom('"tb_product" "product"')
             .addJoin('LEFT JOIN "tb_category" "category" ON "category"."id_category"="product"."category_id"')
