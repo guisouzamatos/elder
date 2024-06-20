@@ -47,4 +47,8 @@ export default class CategoryRepository {
             .delete()
             .execute();
     }
+
+    async findAllCategories() {
+        return await Category.find({});
+    }
 }

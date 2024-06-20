@@ -14,7 +14,7 @@ export default class SupplierRepository {
         const queryUtils = new QueryUtils();
         const builder = queryUtils.addSelect(`
             "supplier"."id_supplier" as "id",
-            "supplier"."name" as "name"
+            "supplier"."name" as "name",
             "supplier"."contact" as "contact"
             `)
             .addFrom('"tb_supplier" "supplier"');
@@ -31,6 +31,10 @@ export default class SupplierRepository {
             .where('"tb_supplier"."id_supplier" = :id', {id})
             .delete()
             .execute();
+    }
+
+    findAllSuppliers = async () => {
+        return await Supplier.find({});
     }
 
     findSupplierById = async (id: number) => {

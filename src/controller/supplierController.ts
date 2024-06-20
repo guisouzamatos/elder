@@ -9,18 +9,23 @@ export default class SupplierController {
     private service: SupplierService = new SupplierService();
 
     deleteSupplierById = async (request: FastifyRequest<{ Params: IdRequestParam }>, reply: FastifyReply) => {
-        const category = await this.service.deleteSupplierById(request.params.id);
-        reply.status(200).send(category);
+        const supplier = await this.service.deleteSupplierById(request.params.id);
+        reply.status(200).send(supplier);
     }
 
     newSupplier = async (request: FastifyRequest<{ Body: SupplierRequestBody }>, reply: FastifyReply) => {
-        const category = await this.service.newSupplier(request.body);
-        reply.status(200).send(category);
+        const supplier = await this.service.newSupplier(request.body);
+        reply.status(200).send(supplier);
+    }
+
+    findAllSuppliers = async (request: FastifyRequest<{ Params: IdRequestParam }>, reply: FastifyReply) => {
+        const suppliers = await this.service.findAllSuppliers();
+        reply.status(200).send(suppliers);
     }
 
     findSupplierById = async (request: FastifyRequest<{ Params: IdRequestParam }>, reply: FastifyReply) => {
-        const category = await this.service.findSupplierById(request.params.id);
-        reply.status(200).send(category);
+        const supplier = await this.service.findSupplierById(request.params.id);
+        reply.status(200).send(supplier);
     }
 
     filterSupplier = async (request: FastifyRequest<{ Body: FilterSupplierRequestBody, Querystring: PaginateQuery }>, reply: FastifyReply) => {

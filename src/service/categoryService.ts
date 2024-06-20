@@ -45,6 +45,10 @@ export default class CategoryService {
         await category.save();
     }
 
+    findAllCategories = async () => {
+        return await this.repository.findAllCategories();
+    }
+
     findCategoryByDescription = async (description: string, id?: number) => {
         return await this.repository.findCategoryByDescription(description, id);
     };

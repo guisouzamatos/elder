@@ -17,6 +17,10 @@ export default class SupplierService {
         return supplier;
     };
 
+    findAllSuppliers = async () => {
+        return await this.repository.findAllSuppliers();
+    }
+
     findSupplierById = async (id: number) => {
         const supplier = await this.repository.findSupplierById(id);
         if (!supplier) {
@@ -35,6 +39,7 @@ export default class SupplierService {
             throw {status: 400, message: 'Fornecedor já existe.'};
         }
         supplier.name = body.name;
+        supplier.contact = body.contact;
         await supplier.save();
     }
 

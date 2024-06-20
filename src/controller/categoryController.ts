@@ -18,6 +18,11 @@ export default class CategoryController {
         reply.status(200).send(category);
     }
 
+    findAllCategories = async (request: FastifyRequest, reply: FastifyReply) => {
+        const categories = await this.service.findAllCategories();
+        reply.status(200).send(categories);
+    }
+
     findCategoryById = async (request: FastifyRequest<{ Params: IdRequestParam }>, reply: FastifyReply) => {
         const category = await this.service.findCategoryById(request.params.id);
         reply.status(200).send(category);

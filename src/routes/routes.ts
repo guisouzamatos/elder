@@ -13,6 +13,7 @@ export default async function routes(fastify): Promise<void> {
 
     //Category
     fastify.post('/category/new', categoryController.newCategory);
+    fastify.get('/category', categoryController.findAllCategories);
     fastify.get('/category/:id', categoryController.findCategoryById);
     fastify.post('/category/filter', categoryController.filterCategory);
     fastify.delete('/category/:id', categoryController.deleteCategoryById);
@@ -25,6 +26,7 @@ export default async function routes(fastify): Promise<void> {
 
     //Supplier
     fastify.post('/supplier/new', supplierController.newSupplier);
+    fastify.get('/supplier', supplierController.findAllSuppliers);
     fastify.get('/supplier/:id', supplierController.findSupplierById);
     fastify.post('/supplier/filter', supplierController.filterSupplier);
     fastify.delete('/supplier/:id', supplierController.deleteSupplierById);
