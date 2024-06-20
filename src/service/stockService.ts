@@ -12,6 +12,7 @@ export default class StockService {
 
     changeStock = async (body: StockRequestBody, reply: FastifyReply) => {
         const products = await this.productService.findAllProductsById(body.stocks.map(stock => stock.productId));
+        const newStocks: Stock[] = [];
         for (const stock of body.stocks) {
             let newStock = await this.findStockByProduct(stock.productId);
             const product = products.find(product => product.id === stock.productId);
@@ -19,7 +20,8 @@ export default class StockService {
                 return;
             }
             if (!newStock) {
-                return await this.createNewStock(body, stock, product);
+                newStocks.push(await this.createNewStock(body, stock, product));
+                return;
             }
             if (body.add) {
                 newStock.quantity += stock.quantity;
@@ -30,8 +32,9 @@ export default class StockService {
                 }
             }
             newStock.totalValue = product.price * stock.quantity;
-            return await newStock.save();
+            newStocks.push(newStock);
         }
+        return await Stock.save(newStocks);
     }
 
     createNewStock = async (body: StockRequestBody, stock: StockObject, product: Product) => {
