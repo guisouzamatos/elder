@@ -1,6 +1,5 @@
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import {AbstractEntity} from "./abstracts/abstractEntity";
-import {NextVal} from "./abstracts/nextVal";
 import {Category} from "./category";
 import {Supplier} from "./supplier";
 

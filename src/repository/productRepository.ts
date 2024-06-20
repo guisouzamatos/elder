@@ -1,7 +1,5 @@
 import {QueryUtils} from "../utils/queryUtils";
-import {Category} from "../models/entity/category";
 import {FastifyRequest} from "fastify";
-import {FilterCategoryRequestBody} from "../models/interface/filter-category-request-body";
 import {PaginateQuery} from "../models/interface/paginate-query";
 import {Product} from "../models/entity/product";
 import {FilterProductRequestBody} from "../models/interface/filter-product-request-body";

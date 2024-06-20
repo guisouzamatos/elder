@@ -1,7 +1,5 @@
 import {AbstractEntity} from "./abstracts/abstractEntity";
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from "typeorm";
-import {NextVal} from "./abstracts/nextVal";
-import {Category} from "./category";
 import {Product} from "./product";
 
 @Entity({name: 'tb_sale'})

@@ -1,6 +1,5 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, PrimaryColumn} from "typeorm";
 import {AbstractEntity} from "./abstracts/abstractEntity";
-import {NextVal} from "./abstracts/nextVal";
 import {Product} from "./product";
 
 @Entity({name: 'tb_stock'})
@@ -9,7 +8,7 @@ export class Stock extends AbstractEntity {
     @PrimaryColumn({ name: 'id_stock' })
     id: number;
 
-    @ManyToOne(() => Product)
+    @OneToOne(() => Product)
     @JoinColumn({ name: 'product_id' })
     product: Product;
 
