@@ -74,6 +74,11 @@ export default class ProductService {
         return await this.repository.findProductByDescription(description, id);
     };
 
+
+    async findAllProducts() {
+        return await this.repository.findAllProducts();
+    }
+
     findProductById = async (id: number) => {
         const product = await this.repository.findProductById(id);
         if (!product) {

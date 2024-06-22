@@ -76,4 +76,8 @@ export default class ProductRepository {
             .delete()
             .execute();
     }
+
+    async findAllProducts() {
+        return await Product.find({});
+    }
 }

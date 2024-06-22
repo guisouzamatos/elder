@@ -42,7 +42,7 @@ CREATE TABLE tb_stock (
                           product_id INTEGER NOT NULL REFERENCES tb_product(id_product),
                           addition BOOLEAN NOT NULL,
                           quantity INTEGER NOT NULL,
-                          total_value INTEGER NOT NULL
+                          total_value NUMERIC(10, 2) NOT NULL
 );
 
 ALTER SEQUENCE tb_stock_id_stock_seq RENAME TO seq_stock;

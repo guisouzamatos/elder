@@ -21,6 +21,7 @@ export default async function routes(fastify): Promise<void> {
     //Product
     fastify.post('/product/new', productController.newProduct);
     fastify.get('/product/:id', productController.findProductById);
+    fastify.get('/product', productController.findAllProducts);
     fastify.post('/product/filter', productController.filterProduct);
     fastify.delete('/product/:id', productController.deleteProductById);
 

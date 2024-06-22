@@ -18,6 +18,11 @@ export default class ProductController {
         reply.status(200).send(category);
     }
 
+    findAllProducts = async (request: FastifyRequest<{ Querystring: PaginateQuery }>, reply: FastifyReply) => {
+        const products = await this.service.findAllProducts();
+        reply.status(200).send(products);
+    }
+
     findProductById = async (request: FastifyRequest<{ Params: IdRequestParam }>, reply: FastifyReply) => {
         const category = await this.service.findProductById(request.params.id);
         reply.status(200).send(category);
