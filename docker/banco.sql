@@ -1,48 +1,109 @@
--- Category table
-CREATE TABLE tb_category (
-                             id_category SERIAL PRIMARY KEY,
-                             description VARCHAR(255) NOT NULL
+create sequence seq_category
+    as integer;
+
+alter sequence seq_category owner to gestao;
+
+create sequence seq_supplier
+    as integer;
+
+alter sequence seq_supplier owner to gestao;
+
+create sequence seq_product
+    as integer;
+
+alter sequence seq_product owner to gestao;
+
+create sequence seq_sale
+    as integer;
+
+alter sequence seq_sale owner to gestao;
+
+create sequence seq_stock
+    as integer;
+
+alter sequence seq_stock owner to gestao;
+
+create table if not exists tb_category
+(
+    id_category integer default nextval('seq_category'::regclass) not null
+    primary key,
+    description varchar(255)                                      not null
+    );
+
+alter table tb_category
+    owner to gestao;
+
+alter sequence seq_category owned by tb_category.id_category;
+
+create table if not exists tb_supplier
+(
+    id_supplier integer default nextval('seq_supplier'::regclass) not null
+    primary key,
+    name        varchar(255)                                      not null,
+    contact     varchar(255)                                      not null
+    );
+
+alter table tb_supplier
+    owner to gestao;
+
+alter sequence seq_supplier owned by tb_supplier.id_supplier;
+
+create table if not exists tb_product
+(
+    id_product  integer default nextval('seq_product'::regclass) not null
+    primary key,
+    description varchar(255)                                     not null,
+    price       numeric(10, 2)                                   not null,
+    category_id integer                                          not null
+    references tb_category,
+    supplier_id integer                                          not null
+    references tb_supplier
+    );
+
+alter table tb_product
+    owner to gestao;
+
+alter sequence seq_product owned by tb_product.id_product;
+
+create table if not exists tb_sale
+(
+    id_sale     integer default nextval('seq_sale'::regclass) not null
+    primary key,
+    total_value numeric(10, 2)                                not null,
+    sale_date   timestamp
+    );
+
+alter table tb_sale
+    owner to gestao;
+
+alter sequence seq_sale owned by tb_sale.id_sale;
+
+create table if not exists tb_stock
+(
+    id_stock    integer default nextval('seq_stock'::regclass) not null
+    primary key,
+    product_id  integer                                        not null
+    references tb_product,
+    quantity    integer                                        not null,
+    total_value numeric(10, 2)                                 not null
+    );
+
+alter table tb_stock
+    owner to gestao;
+
+alter sequence seq_stock owned by tb_stock.id_stock;
+
+create table if not exists tb_sale_products
+(
+    product_id integer not null
+    constraint tb_sale_products_product
+    references tb_product,
+    sale_id    integer not null
+    constraint tb_sale_products_sale
+    references tb_sale,
+    quantity   integer not null
 );
 
-ALTER SEQUENCE tb_category_id_category_seq RENAME TO seq_category;
+alter table tb_sale_products
+    owner to gestao;
 
--- Suppliers table
-CREATE TABLE tb_supplier (
-                             id_supplier SERIAL PRIMARY KEY,
-                             name VARCHAR(255) NOT NULL,
-                             contact VARCHAR(255) NOT NULL
-);
-
-ALTER SEQUENCE tb_supplier_id_supplier_seq RENAME TO seq_supplier;
-
--- Products table
-CREATE TABLE tb_product (
-                            id_product SERIAL PRIMARY KEY,
-                            description VARCHAR(255) NOT NULL,
-                            price NUMERIC(10,2) NOT NULL,
-                            category_id INTEGER NOT NULL REFERENCES tb_category(id_category),
-                            supplier_id INTEGER NOT NULL REFERENCES tb_supplier(id_supplier)
-);
-
-ALTER SEQUENCE tb_product_id_product_seq RENAME TO seq_product;
-
--- Sales table
-CREATE TABLE tb_sale (
-                         id_sale SERIAL PRIMARY KEY,
-                         quantity INTEGER NOT NULL,
-                         total_value NUMERIC(10,2) NOT NULL,
-                         product_id INTEGER NOT NULL REFERENCES tb_product(id_product)
-);
-
-ALTER SEQUENCE tb_sale_id_sale_seq RENAME TO seq_sale;
-
--- Stock table
-CREATE TABLE tb_stock (
-                          id_stock SERIAL PRIMARY KEY,
-                          product_id INTEGER NOT NULL REFERENCES tb_product(id_product),
-                          addition BOOLEAN NOT NULL,
-                          quantity INTEGER NOT NULL,
-                          total_value NUMERIC(10, 2) NOT NULL
-);
-
-ALTER SEQUENCE tb_stock_id_stock_seq RENAME TO seq_stock;
