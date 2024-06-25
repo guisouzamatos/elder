@@ -15,6 +15,7 @@ export default class SaleService {
         let newSale = new Sale();
         newSale.totalValue = 0;
 
+        let acc = 0;
         body.products.forEach(product => {
             let saleProduct = new SaleProducts();
             saleProduct.quantity = product.quantity;
@@ -22,16 +23,34 @@ export default class SaleService {
             if (!productExists) {
                 return;
             }
+            saleProduct.productId = productExists.id;
             saleProduct.product = productExists;
-            newSale.totalValue += productExists.price;
+            saleProduct.sale = newSale;
+            acc = acc + Number(productExists.price);
             saleProducts.push(saleProduct);
         });
-
-        newSale.products = saleProducts;
-        await newSale.save();
+        newSale.totalValue = acc;
+        const sale = await Sale.save(newSale);
+        saleProducts.forEach(saleProduct => saleProduct.saleId = sale.id);
+        await SaleProducts.save(saleProducts);
     }
 
     reportSale = async (filter: SaleFilter) => {
-        return await this.repository.findAll(filter.startDate, filter.endDate);
+        const sales = await this.repository.findAll(filter.startDate, filter.endDate);
+        return sales.map(sale => {
+            const products = sale.products.map(product => {
+                return {
+                    ...product,
+                    description: product.product.description,
+                    price: `R$ ${Number(product.product.price).toFixed(2)}`,
+                    totalValue: `R$ ${(product.product.price * product.quantity).toFixed(2)}`
+                }
+            })
+            return {
+                ...sale,
+                products,
+                totalItems: sale.products.length,
+            }
+        });
     }
 }

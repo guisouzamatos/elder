@@ -12,7 +12,7 @@ export default class SaleController {
     }
 
     reportSale = async (request: FastifyRequest<{ Body: SaleFilter }>, reply: FastifyReply) => {
-        const sales = await this.service.reportSale(request.body, reply);
+        const sales = await this.service.reportSale(request.body);
         reply.status(200).send(sales);
     }
 }

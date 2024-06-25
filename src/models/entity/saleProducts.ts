@@ -14,6 +14,12 @@ export class SaleProducts extends AbstractEntity {
     @JoinColumn({ name: 'sale_id' })
     sale: Sale;
 
+    @PrimaryColumn({ name: 'sale_id' })
+    saleId: number;
+
+    @PrimaryColumn({ name: 'product_id' })
+    productId: number;
+
     @Column({name: 'quantity'})
     quantity: number;
 }

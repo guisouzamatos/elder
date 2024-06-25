@@ -3,11 +3,13 @@ import CategoryController from "../controller/categoryController";
 import ProductController from "../controller/productController";
 import SupplierController from "../controller/supplierController";
 import StockController from "../controller/stockController";
+import SaleController from "../controller/saleController";
 
 export default async function routes(fastify): Promise<void> {
 
     const categoryController = new CategoryController();
     const productController = new ProductController();
+    const saleController = new SaleController();
     const supplierController = new SupplierController();
     const stockController = new StockController();
 
@@ -24,6 +26,10 @@ export default async function routes(fastify): Promise<void> {
     fastify.get('/product', productController.findAllProducts);
     fastify.post('/product/filter', productController.filterProduct);
     fastify.delete('/product/:id', productController.deleteProductById);
+
+    //Sale
+    fastify.post('/sale', saleController.newSale);
+    fastify.post('/sale/report', saleController.reportSale);
 
     //Supplier
     fastify.post('/supplier/new', supplierController.newSupplier);
