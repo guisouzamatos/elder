@@ -107,3 +107,6 @@ create table if not exists tb_sale_products
 alter table tb_sale_products
     owner to gestao;
 
+alter table tb_stock
+add column addition boolean;
+

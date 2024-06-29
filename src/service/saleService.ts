@@ -30,6 +30,7 @@ export default class SaleService {
             saleProducts.push(saleProduct);
         });
         newSale.totalValue = acc;
+        newSale.saleDate = new Date();
         const sale = await Sale.save(newSale);
         saleProducts.forEach(saleProduct => saleProduct.saleId = sale.id);
         await SaleProducts.save(saleProducts);

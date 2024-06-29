@@ -39,16 +39,14 @@ export default class ProductService {
         if (body.id) {
             product = await this.findProductById(body.id);
         }
-        const categoryByName = await this.findProductByDescription(body.description, body.id);
-        if (categoryByName) {
+        const productByDescription = await this.findProductByDescription(body.description, body.id);
+        if (productByDescription) {
             throw {status: 400, message: 'Produto já existe.'};
         }
         product.description = body.description;
         product.price = body.price;
-        const supplier = await this.supplierService.findSupplierById(body.supplierId);
-        product.supplier = supplier;
-        const category = await this.getCategoryService().findCategoryById(body.categoryId);
-        product.category = category;
+        product.supplier = await this.supplierService.findSupplierById(body.supplierId);
+        product.category = await this.getCategoryService().findCategoryById(body.categoryId);
         await product.save();
     }
 
